@@ -37,11 +37,5 @@ test:
     ASPNETCORE_ENVIRONMENT: Testing
 
   script:
-      - echo "Waiting for PostgreSQL..."
-      - |
-          until curl -s postgres:5432 > /dev/null; do
-            echo "Waiting for postgres..."
-            sleep 2
-          done
-      - dotnet restore
-      - dotnet test
+    - dotnet restore
+    - dotnet test
