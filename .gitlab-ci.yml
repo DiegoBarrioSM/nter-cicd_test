@@ -13,6 +13,8 @@ variables:
 # -------------------------
 build:
   stage: build
+  tags:
+    - cicd
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
     - dotnet restore
@@ -23,6 +25,8 @@ build:
 # -------------------------
 test:
   stage: test
+  tags:
+    - cicd
   image: mcr.microsoft.com/dotnet/sdk:9.0
 
   services:
@@ -34,6 +38,9 @@ test:
 
   script:
     - echo "Waiting for PostgreSQL..."
-    - sleep 10
+    - until pg_isready -h postgres -U userTest; do
+        echo "Waiting for postgres..."
+        sleep 2
+      done
     - dotnet restore
     - dotnet test --logger "trx;LogFileName=test_results.trx"
