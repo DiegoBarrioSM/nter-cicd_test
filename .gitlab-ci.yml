@@ -1,0 +1,39 @@
+stages:
+  - build
+  - test
+
+variables:
+  POSTGRES_DB: dbTest
+  POSTGRES_USER: userTest
+  POSTGRES_PASSWORD: postgres
+  CONNECTION_STRING: "Host=postgres;Port=5432;Database=dbTest;Username=userTest;Password=postgres"
+
+# -------------------------
+# BUILD
+# -------------------------
+build:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet restore
+    - dotnet build -c Release
+
+# -------------------------
+# TESTS CON BD
+# -------------------------
+test:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+
+  services:
+    - name: postgres:15
+      alias: postgres
+
+  variables:
+    ASPNETCORE_ENVIRONMENT: Testing
+
+  script:
+    - echo "Waiting for PostgreSQL..."
+    - sleep 10
+    - dotnet restore
+    - dotnet test --logger "trx;LogFileName=test_results.trx"
