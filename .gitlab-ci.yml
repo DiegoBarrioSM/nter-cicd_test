@@ -39,7 +39,7 @@ test:
   script:
       - echo "Waiting for PostgreSQL..."
       - |
-          until pg_isready -h postgres -U userTest; do
+          until curl -s postgres:5432 > /dev/null; do
             echo "Waiting for postgres..."
             sleep 2
           done
