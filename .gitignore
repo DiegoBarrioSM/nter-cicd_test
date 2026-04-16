@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Api/gitlab-runner-config/.runner_system_id
+/Api/gitlab-runner-config/config.toml

@@ -37,10 +37,11 @@ test:
     ASPNETCORE_ENVIRONMENT: Testing
 
   script:
-    - echo "Waiting for PostgreSQL..."
-    - until pg_isready -h postgres -U userTest; do
-        echo "Waiting for postgres..."
-        sleep 2
-      done
-    - dotnet restore
-    - dotnet test --logger "trx;LogFileName=test_results.trx"
+      - echo "Waiting for PostgreSQL..."
+      - |
+          until pg_isready -h postgres -U userTest; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+      - dotnet restore
+      - dotnet test
