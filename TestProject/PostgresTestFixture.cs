@@ -11,8 +11,7 @@ public class PostgresTestFixture : IAsyncLifetime
 
     public PostgresTestFixture()
     {
-        _container = new PostgreSqlBuilder()
-            .WithImage("postgres:15")
+        _container = new PostgreSqlBuilder("postgres:15")
             .WithDatabase("dbTest")
             .WithUsername("userTest")
             .WithPassword("postgres")
