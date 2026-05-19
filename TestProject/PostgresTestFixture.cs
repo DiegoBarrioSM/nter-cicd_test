@@ -15,6 +15,8 @@ public class PostgresTestFixture : IAsyncLifetime
             .WithDatabase("dbTest")
             .WithUsername("userTest")
             .WithPassword("postgres")
+            .WithCleanUp(true)
+            .WithAutoRemove(true)
             .Build();
     }
 
