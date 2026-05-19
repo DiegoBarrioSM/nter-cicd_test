@@ -1,5 +1,5 @@
 ﻿services:
-# Para la version definitiva, ubica este fichero en Solution Items, asi evitamos que se genere aqui la configuracion del runner
+
   db:
     image: postgres:15
     container_name: postgres
@@ -11,16 +11,6 @@
       - "5445:5432"
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data
-
-  gitlab-runner:
-    image: gitlab/gitlab-runner:latest
-    container_name: gitlab-runner
-    restart: always
-    depends_on:
-      - db
-    volumes:
-      - ./gitlab-runner-config:/etc/gitlab-runner
-      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   postgres_data_dev:

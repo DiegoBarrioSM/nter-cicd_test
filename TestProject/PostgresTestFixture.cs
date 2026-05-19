@@ -7,7 +7,7 @@ public class PostgresTestFixture : IAsyncLifetime
 {
     private readonly PostgreSqlContainer _container;
 
-    public DbContextOptions<AppDbContext> DbOptions { get; private set; }
+    public DbContextOptions<AppDbContext> DbOptions { get; private set; } = null!;
 
     public PostgresTestFixture()
     {
