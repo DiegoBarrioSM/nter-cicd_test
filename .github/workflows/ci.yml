@@ -1,29 +1,40 @@
-﻿name: CI
+﻿name: CI-CD
 
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
-  test:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore dependencies
-        run: dotnet restore
+      - run: dotnet restore
+      - run: dotnet build -c Release --no-restore
+      - run: dotnet test -c Release --no-build
 
-      - name: Build
-        run: dotnet build --no-restore -c Release
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
 
-      - name: Test
-        run: dotnet test --no-build -c Release --logger "console;verbosity=detailed"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - run: dotnet publish Api/Api.csproj -c Release -o publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: TEST-2-CICD
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: publish
