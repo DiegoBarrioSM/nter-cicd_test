@@ -38,3 +38,7 @@ jobs:
           app-name: TEST-2-CICD
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: publish
+
+
+# postgresql://postgres:[YOUR-PASSWORD]@db.hbegfncpybgpsgevztfj.supabase.co:5432/postgres
+# 4Aq9?6ZMTV_cb93
