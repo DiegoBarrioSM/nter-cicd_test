@@ -11,6 +11,6 @@ public class Order
     public Guid Id { get; private set; }
 
     public string UserName { get; private set; }
+
+    public ICollection<Payment> Payments { get; private set; } = [];
 }
-
-
